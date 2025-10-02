@@ -39,7 +39,8 @@ export default function LoginPage() {
           <div className="absolute inset-0" style={{ backgroundColor: 'rgba(0, 4, 75, 0.3)' }}></div>
           
           {/* University text overlay */}
-          <div className="absolute top-8 left-8 text-white z-10">    
+          <div className="absolute top-8 left-8 text-white z-10">
+    
           </div>
         </div>
       </div>
@@ -50,7 +51,7 @@ export default function LoginPage() {
           {/* Mobile logo */}
           <div className="lg:hidden text-center mb-8">
             <Image
-              src="/unilorin-logo.svg"
+              src="/unilorin_logo-1.jpg"
               alt="University of Ilorin Logo"
               width={80}
               height={80}
