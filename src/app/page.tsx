@@ -39,8 +39,7 @@ export default function LoginPage() {
           <div className="absolute inset-0" style={{ backgroundColor: 'rgba(0, 4, 75, 0.3)' }}></div>
           
           {/* University text overlay */}
-          <div className="absolute top-8 left-8 text-white z-10">
-           
+          <div className="absolute top-8 left-8 text-white z-10">    
           </div>
         </div>
       </div>
