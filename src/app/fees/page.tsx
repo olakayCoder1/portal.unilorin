@@ -28,14 +28,14 @@ export default function FeesPage() {
     router.push('/');
   };
 
-  const handleProceed = () => {
-    alert('You will now be redirected to the school portal to complete your payment.');
-    window.location.href = 'https://portal.unilorin.edu.ng/student/fees'
-  };
+  // const handleProceed = () => {
+  //   alert('You will now be redirected to the school portal to complete your payment.');
+  //   window.location.href = 'https://portal.unilorin.edu.ng/student/fees'
+  // };
 
-  const handleCancel = () => {
-    router.push('/');
-  };
+  // const handleCancel = () => {
+  //   router.push('/');
+  // };
 
   if (!user) {
     return (
@@ -147,19 +147,19 @@ export default function FeesPage() {
                 <p className="text-2xl font-bold text-blue-900 mt-2">₦ 184,510</p>
               </div>
               <div className="flex space-x-3">
-                <button
+                {/* <button
                   onClick={handleProceed}
                   className="px-6 py-3 text-white rounded-lg font-medium hover:opacity-90 transition-colors cursor-pointer"
                   style={{ backgroundColor: '#00044b' }}
                 >
                   PROCEED
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
 
           {/* Additional information */}
-          <div className="px-6 py-4 bg-yellow-50 border-t">
+          {/* <div className="px-6 py-4 bg-yellow-50 border-t">
             <div className="flex items-start space-x-3">
               <div className="flex-shrink-0">
                 <svg className="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
@@ -175,7 +175,7 @@ export default function FeesPage() {
                 </p>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
 
       </main>
