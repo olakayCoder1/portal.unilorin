@@ -10,22 +10,38 @@ interface User {
 }
 
 export default function FeesPage() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<any>(null);
   const router = useRouter();
 
   useEffect(() => {
-    // Check if user is logged in
-    const userData = localStorage.getItem('user');
-    if (!userData) {
+    // Get user data from localStorage
+    const userData = localStorage.getItem('userData');
+    
+    if (userData) {
+      setUser(JSON.parse(userData));
+    } else {
+      // Redirect to login if no user data
       router.push('/');
       return;
     }
-    setUser(JSON.parse(userData));
   }, [router]);
 
+  // Format fee amount for display
+  const formatFeeAmount = (amount: number) => {
+    return amount.toLocaleString('en-NG', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  };
+
   const handleLogout = () => {
-    localStorage.removeItem('user');
+    localStorage.removeItem('userData');
+    localStorage.removeItem('feeAmount');
     router.push('/');
+  };
+
+  const handleProceed = () => {
+    alert('You will be redirected to the school portal for payment.');
   };
 
   // const handleProceed = () => {
@@ -72,89 +88,69 @@ export default function FeesPage() {
       </header>
 
       {/* Main content */}
-      <main className="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-          {/* Fee statement header */}
-          <div className="bg-gray-50 px-6 py-4 border-b">
-            <h2 className="text-2xl font-bold text-gray-900">School Fees for 2025/2026 Session</h2>
+      <main className="min-h-screen bg-gray-50 py-4 px-3 sm:px-6 lg:px-8">
+        <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+          {/* Session Header */}
+          <div className="bg-white px-6 py-6 border-b border-gray-200">
+            <h1 className="text-2xl font-bold text-gray-900 text-center">2025/2026 Session</h1>
           </div>
 
-          {/* Student information */}
-          <div className="px-6 py-4 border-b bg-gray-50">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Full Name:</p>
-                <p className="text-lg font-semibold text-gray-900">{user.name}</p>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-gray-600">Registration Number:</p>
-                <p className="text-lg font-semibold text-gray-900">{user.registrationNumber}</p>
-              </div>
+          {/* Student Information */}
+          <div className="px-6 py-6 space-y-6">
+            <div>
+              <p className="text-sm font-medium text-gray-600 mb-1">Full Name:</p>
+              <p className="text-base font-semibold text-gray-900">{user.name.toUpperCase()}</p>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-gray-600 mb-1">Registration Number:</p>
+              <p className="text-base font-semibold text-gray-900">{user.matricNumber}</p>
             </div>
           </div>
 
-          {/* Fee breakdown table */}
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Item
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Description
-                  </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Amount
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    School Fees
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    School Fees
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right font-medium">
-                    ₦ 184,510
-                  </td>
-                </tr>
-                <tr className="bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    Total
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    Total
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right font-bold">
-                    ₦ 184,510
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          {/* Fee Table */}
+          <div className="px-6 pb-6">
+            <div className="border border-gray-200 rounded-lg overflow-hidden">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-gray-50 border-b border-gray-200">
+                    <th className="px-3 py-3 text-left font-medium text-gray-700">Item</th>
+                    <th className="px-3 py-3 text-left font-medium text-gray-700">Description</th>
+                    <th className="px-3 py-3 text-right font-medium text-gray-700">Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-gray-200 bg-gray-50">
+                    <td className="px-3 py-4 text-gray-900">School Fees</td>
+                    <td className="px-3 py-4 text-gray-900">School Fees</td>
+                    <td className="px-3 py-4 text-gray-900 text-right font-medium">
+                      ₦ {formatFeeAmount(user.feeAmount)}
+                    </td>
+                  </tr>
+                  <tr className="bg-gray-50">
+                    <td className="px-3 py-4 font-bold text-gray-900">Total</td>
+                    <td className="px-3 py-4 font-bold text-gray-900">Total</td>
+                    <td className="px-3 py-4 font-bold text-gray-900 text-right">
+                      ₦ {formatFeeAmount(user.feeAmount)}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
 
-          {/* Payment summary card */}
-          <div className="px-6 py-6 bg-blue-50 border-t">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
-              <div>
-                <h3 className="text-lg font-semibold text-blue-900">Payment Summary</h3>
-                <p className="text-sm text-gray-600 mt-1">
-                  Total school fees amount
-                </p>
-                <p className="text-2xl font-bold text-blue-900 mt-2">₦ 184,510</p>
-              </div>
-              <div className="flex space-x-3">
-                {/* <button
-                  onClick={handleProceed}
-                  className="px-6 py-3 text-white rounded-lg font-medium hover:opacity-90 transition-colors cursor-pointer"
-                  style={{ backgroundColor: '#00044b' }}
-                >
-                  PROCEED
-                </button> */}
-              </div>
+          {/* Action Buttons */}
+          <div className="px-6 pb-8 pt-4">
+            <div className="flex justify-between space-x-4">
+              <button className="flex-1 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors text-center">
+                CANCEL
+              </button>
+              <button 
+                onClick={handleProceed}
+                className="flex-1 py-3 text-white rounded-lg font-medium hover:opacity-90 transition-colors text-center"
+                style={{ backgroundColor: '#00044b' }}
+              >
+                PROCEED
+              </button>
             </div>
           </div>
 

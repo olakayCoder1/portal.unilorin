@@ -12,14 +12,34 @@ export default function LoginPage() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simple authentication - in a real app, you'd validate against a backend
+    
+    // Simple authentication logic - in real app, this would be API call
     if (staffStudentId && password) {
-      // Store user data in localStorage for demo purposes
-      localStorage.setItem('user', JSON.stringify({
-        id: staffStudentId,
-        name: 'Kazeem Aminat Ashabi',
-        registrationNumber: '22/25OA073'
-      }));
+      let userData;
+      
+      // Check for specific matric number
+      if (staffStudentId === '22/25OS36') {
+        userData = {
+          name: 'Aisha Ibrahim Omobolanle',
+          matricNumber: '22/25OS36',
+          level: '300',
+          faculty: 'Faculty of Science',
+          department: 'Computer Science',
+          feeAmount: 150000.50
+        };
+      } else {
+        // Default student data
+        userData = {
+          name: 'Kazeem Aminat Ashabi',
+          matricNumber: '22/25OA073',
+          level: '200',
+          faculty: 'Faculty of Science',
+          department: 'Computer Science',
+          feeAmount: 184510
+        };
+      }
+      
+      localStorage.setItem('userData', JSON.stringify(userData));
       router.push('/fees');
     }
   };
