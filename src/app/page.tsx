@@ -17,7 +17,7 @@ export default function LoginPage() {
     if (staffStudentId && password) {
       let userData;
       
-      // Check for specific matric number
+      // Check for specific matric numbers
       if (staffStudentId === '22/25OS36') {
         userData = {
           name: 'Aisha Ibrahim Omobolanle',
@@ -25,7 +25,16 @@ export default function LoginPage() {
           level: '300',
           faculty: 'Faculty of Science',
           department: 'Computer Science',
-          feeAmount: 150000.50
+          feeAmount: 157790
+        };
+      } else if (staffStudentId === '22/25OS036') {
+        userData = {
+          name: 'IBRAHIM Aishat Omobolanle',
+          matricNumber: '22/25OS036',
+          level: '300',
+          faculty: 'Faculty of Science',
+          department: 'Computer Science',
+          feeAmount: 157750
         };
       } else {
         // Default student data
